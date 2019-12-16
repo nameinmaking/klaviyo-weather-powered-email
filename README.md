@@ -1,5 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### City JSON File
+https://gist.github.com/Miserlou/c5cd8364bf9b2420bb29
+
 ## Available Scripts
 
 In the project directory, you can run:
