@@ -31,6 +31,7 @@ class App extends React.Component {
         // alert(JSON.stringify(userData));
         Firebase.database()
             .ref("/")
+            .child(this.state.email.replace(".", "_"))
             .set(this.state);
         console.log("Data Saved!");
     };
