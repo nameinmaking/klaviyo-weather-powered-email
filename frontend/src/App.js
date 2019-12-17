@@ -1,18 +1,47 @@
 import React from 'react';
 import data from './cities';
+import Firebase from 'firebase';
+import DB_CONFIG from './Config';
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
+        Firebase.initializeApp(DB_CONFIG);
 
         this.state = {
             email: "",
-            city: ""
+            city: "",
+            longitude: "",
+            latitude: ""
         };
         this.emailIsValid = this.emailIsValid.bind(this);
         this.subscribeUser = this.subscribeUser.bind(this);
     }
+
+
+    writeUserData = () => {
+        // let userData = {
+        //     [this.state.email]: {
+        //         "city": this.state.city,
+        //         "longitude": this.state.longitude,
+        //         "latitude": this.state.latitude
+        //     }
+        // };
+        // alert(JSON.stringify(userData));
+        Firebase.database()
+            .ref("/")
+            .set(this.state);
+        console.log("Data Saved!");
+    };
+
+    getUserData = () => {
+        let ref = Firebase.database().ref("/");
+        ref.on("value", snapshot => {
+            const state = snapshot.val();
+            this.setState(state);
+        });
+    };
 
     componentDidMount() {
         let dropdown = document.getElementById('dropdown');
@@ -29,11 +58,11 @@ class App extends React.Component {
         for (let i = 0; i < data.length; i++) {
             option = document.createElement('option');
             option.text = data[i].city;
-            option.value = [data[i].latitude, data[i].longitude];
+            option.value = [data[i].city, data[i].latitude, data[i].longitude];
             dropdown.add(option);
         }
 
-        console.log(option);
+        this.getUserData();
     }
 
     render() {
@@ -43,7 +72,9 @@ class App extends React.Component {
                 <div className="form-label-group">
                     <div className="dropdown show">
                         <select className="form-control form-control-lg" id="dropdown"
-                                onChange={this.selectHandleChange} value={this.state.city}>
+                                onChange={this.selectHandleChange}
+                                value={this.state.city}
+                        >
                         </select>
                     </div>
                 </div>
@@ -56,12 +87,11 @@ class App extends React.Component {
     }
 
     async subscribeUser() {
-
         if (document.getElementById("inputEmail").value) {
+            console.log("here");
             await this.setState({email: document.getElementById("inputEmail").value});
-            alert(this.state.email + this.state.city);
+            this.writeUserData();
         }
-
     }
 
     emailIsValid(email) {
@@ -69,7 +99,9 @@ class App extends React.Component {
     }
 
     selectHandleChange = (event) => {
-        this.setState({city: event.target.value});
+        let str = event.target.value;
+        let match = str.split(',');
+        this.setState({city: match[0], longitude: match[1], latitude: match[2]});
     };
 }
 
