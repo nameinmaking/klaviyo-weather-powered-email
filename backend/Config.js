@@ -1,5 +1,5 @@
 // web app's Firebase configuration
-const DB_CONFIG = {
+exports.DB_CONFIG = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "klaviyo-weather-app.firebaseapp.com",
     databaseURL: "https://klaviyo-weather-app.firebaseio.com",
@@ -10,4 +10,3 @@ const DB_CONFIG = {
     measurementId: "G-LHM0QBSNNB"
 };
 
-export default DB_CONFIG;

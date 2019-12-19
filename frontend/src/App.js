@@ -2,21 +2,27 @@ import React from 'react';
 import data from './cities';
 import Firebase from 'firebase';
 import DB_CONFIG from './Config';
+const ADMIN_EMAIL = "vipulsharma018@gmail.com";
+const sendGridMail = require("@sendgrid/mail");
+const DARKSKY_API_KEY = process.env.DARKSKY_API_KEY;
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
         Firebase.initializeApp(DB_CONFIG);
+        sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         this.state = {
             email: "",
             city: "",
             longitude: "",
-            latitude: ""
+            latitude: "",
+            sendEmail: false
         };
         this.emailIsValid = this.emailIsValid.bind(this);
         this.subscribeUser = this.subscribeUser.bind(this);
+        this.signInAdmin = this.signInAdmin.bind(this);
     }
 
 
@@ -69,7 +75,6 @@ class App extends React.Component {
     render() {
         return (
             <div>
-
                 <div className="form-label-group">
                     <div className="dropdown show">
                         <select className="form-control form-control-lg" id="dropdown"
@@ -83,13 +88,65 @@ class App extends React.Component {
                 <button className="btn btn-lg btn-primary btn-block" type="submit"
                         onClick={this.subscribeUser}> Subscribe
                 </button>
+
+                    <button className="btn btn-lg btn-warning btn-block" type="button" id="signInButton"
+                            onClick={this.signInAdmin}> Sign In (admin)
+                    </button>
             </div>
         );
     }
 
+    sendEmails() {
+
+        Firebase.database().ref("/").on('value', function(snap){
+
+            snap.forEach(function(childNodes){
+                console.log("DARKSKY_API_KEY" + DARKSKY_API_KEY);
+                console.log(childNodes.val().city);
+                console.log(childNodes.val().email);
+                console.log(childNodes.val().longitude);
+                console.log(childNodes.val().latitude);
+
+                console.log(fetch("https://api.darksky.net/forecast/" + DARKSKY_API_KEY + "/" + childNodes.val().longitude + "," + childNodes.val().latitude));
+
+                // const message = {
+                //     to: childNodes.val().email,
+                //     from: ADMIN_EMAIL,
+                //     subject: "Your weather report for " + childNodes.val().city,
+                //     text: fetch("https://api.darksky.net/forecast/" + DARSKY_API_KEY + "/" + childNodes.val().longitude + "," + childNodes.val().latitude),
+                //     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                // };
+                //
+                // sendGridMail.send(message);
+
+            });
+        });
+
+
+
+
+
+
+    }
+
+
+    signInAdmin() {
+        if (this.state.sendEmail) {
+            this.setState({sendEmail: false});
+            document.querySelector('#signInButton').innerHTML = 'SigIn (admin)';
+            this.sendEmails();
+        } else if (document.getElementById("inputEmail").value) {
+            if (document.getElementById("inputEmail").value === ADMIN_EMAIL) {
+                this.setState({sendEmail: true});
+                document.querySelector('#signInButton').innerHTML = 'Send Email';
+            } else {
+                alert("Not an admin email!");
+            }
+        }
+    }
+
     async subscribeUser() {
         if (document.getElementById("inputEmail").value) {
-            console.log("here");
             await this.setState({email: document.getElementById("inputEmail").value});
             this.writeUserData();
         }
