@@ -1,6 +1,5 @@
 import axios from 'axios';
 import moment from 'moment';
-import WeatherCache from './WeatherCache';
 
 const getTodaysDate = () => moment().format('YYYY-MM-DD');
 const getYesterdaysDate = () =>
@@ -55,10 +54,6 @@ const getHistoricalWeather = async city => {
 export const getWeatherStatus = async city => {
     const todaysDate = getTodaysDate();
 
-    // Check cache if we have data
-    const cacheData = await WeatherCache.getCityWeather(city);
-    if (cacheData && cacheData.date === todaysDate) return cacheData;
-
     // If not, fetch fresh new data
     const [current, historical] = await Promise.all([getCurrentWeather(city), getHistoricalWeather(city)]);
 
@@ -78,8 +73,6 @@ export const getWeatherStatus = async city => {
         iconCode: current.weather.icon
     };
 
-    // Update/Save Cache
-    WeatherCache.cacheCityWeather(result);
 
     // Return newly computed data
     return result;
