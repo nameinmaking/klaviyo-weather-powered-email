@@ -2,9 +2,11 @@ import React from 'react';
 import data from './cities';
 import Firebase from 'firebase';
 import DB_CONFIG from './Config';
-const ADMIN_EMAIL = "vipulsharma018@gmail.com";
+import {getWeatherStatus} from "./mailer/WeatherBit";
+import ReactDomServer from "react-dom/server";
+import {Email, getSubject} from "./mailer/Email";
 const sendGridMail = require("@sendgrid/mail");
-const DARKSKY_API_KEY = process.env.DARKSKY_API_KEY;
+const ADMIN_EMAIL = "vipulsharma018@gmail.com";
 
 class App extends React.Component {
 
@@ -100,24 +102,26 @@ class App extends React.Component {
 
         Firebase.database().ref("/").on('value', function(snap){
 
-            snap.forEach(function(childNodes){
-                console.log("DARKSKY_API_KEY" + DARKSKY_API_KEY);
+            snap.forEach(async function(childNodes){
                 console.log(childNodes.val().city);
                 console.log(childNodes.val().email);
                 console.log(childNodes.val().longitude);
                 console.log(childNodes.val().latitude);
 
-                console.log(fetch("https://api.darksky.net/forecast/" + DARKSKY_API_KEY + "/" + childNodes.val().longitude + "," + childNodes.val().latitude));
 
-                // const message = {
-                //     to: childNodes.val().email,
-                //     from: ADMIN_EMAIL,
-                //     subject: "Your weather report for " + childNodes.val().city,
-                //     text: fetch("https://api.darksky.net/forecast/" + DARSKY_API_KEY + "/" + childNodes.val().longitude + "," + childNodes.val().latitude),
-                //     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-                // };
-                //
-                // sendGridMail.send(message);
+                const weatherStatus = await getWeatherStatus(childNodes.val().city);
+
+                const emailMarkup = ReactDomServer.renderToStaticMarkup(<Email {...weatherStatus} />);
+
+                const message = {
+                    to: childNodes.val().email,
+                    from: '"Vipul Sharma" <vipulsharma018@gmail.com>',
+                    subject: getSubject(weatherStatus),
+                    html: emailMarkup
+                };
+
+                sendGridMail.send(message);
+                console.log('Email sent');
 
             });
         });
