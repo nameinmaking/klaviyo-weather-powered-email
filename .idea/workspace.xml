@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dddd2a93-851c-44c3-a473-093c87724912" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/aliases/hiredis.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/mailer/Email.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/mailer/WeatherBit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/mailer/WeatherCache.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/asset-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/precache-manifest.1822414fa7834d83a36c320a1d9b4db0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/css/main.5ecd60fb.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/css/main.5ecd60fb.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/2.844c6c2a.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/2.844c6c2a.chunk.js.LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/2.844c6c2a.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/main.b731b691.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/main.b731b691.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/runtime-main.711fb0a5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/build/static/js/runtime-main.711fb0a5.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-    </list>
+    <list default="true" id="dddd2a93-851c-44c3-a473-093c87724912" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,6 +73,7 @@
       <workItem from="1576557399880" duration="11971000" />
       <workItem from="1576713206599" duration="1124000" />
       <workItem from="1576724372582" duration="12846000" />
+      <workItem from="1576743758719" duration="687000" />
     </task>
     <servers />
   </component>
